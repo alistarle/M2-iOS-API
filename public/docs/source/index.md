@@ -16,8 +16,8 @@ toc_footers:
 # Informations
 
 Welcome to the generated API reference.
-[Get Postman Collection](http://idrive.dev/docs/collection.json)
-[Get SoapUI Project File](http://idrive.dev/docs/API-soapui-project.xml)
+[Get Postman Collection](http://idrive.chapka.me/docs/collection.json)
+[Get SoapUI Project File](http://idrive.chapka.me/docs/API-soapui-project.xml)
 
 Here is the following account available for testing :
 * **alistarle@gmail.com:password** (Monitor)
@@ -50,7 +50,7 @@ Create a new session in a CREATED state
 > Example request:
 
 ```bash
-curl -X POST "http://idrive.dev/api/session" \
+curl -X POST "http://idrive.chapka.me/api/session" \
 -H "Accept: application/json" \
     -d "sessionDate"="Tuesday, 28-Mar-17 20:28:03 UTC" \
     -d "begin"="20:28" \
@@ -64,7 +64,7 @@ curl -X POST "http://idrive.dev/api/session" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/session",
+    "url": "http://idrive.chapka.me/api/session",
     "method": "POST",
     "data": {
         "sessionDate": "Tuesday, 28-Mar-17 20:28:03 UTC",
@@ -144,7 +144,7 @@ If unmatch query parameter => Return amount of matching sessions
 > Example request:
 
 ```bash
-curl -X GET "http://idrive.dev/api/match/{session}" \
+curl -X GET "http://idrive.chapka.me/api/match/{session}" \
 -H "Accept: application/json"
 ```
 
@@ -152,7 +152,7 @@ curl -X GET "http://idrive.dev/api/match/{session}" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/match/{session}",
+    "url": "http://idrive.chapka.me/api/match/{session}",
     "method": "GET",
     "headers": {
         "accept": "application/json"
@@ -290,7 +290,7 @@ This method check the current session state to avoid incoherence
 > Example request:
 
 ```bash
-curl -X PATCH "http://idrive.dev/api/session/{session}" \
+curl -X PATCH "http://idrive.chapka.me/api/session/{session}" \
 -H "Accept: application/json" \
     -d "departure"="47.9167,1.9" \
     -d "arrival"="47.9167,1.9" \
@@ -301,7 +301,7 @@ curl -X PATCH "http://idrive.dev/api/session/{session}" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/session/{session}",
+    "url": "http://idrive.chapka.me/api/session/{session}",
     "method": "PATCH",
     "data": {
         "departure": "47.9167,1.9",
@@ -391,7 +391,7 @@ Create a new User ( Monitor or Student )
 > Example request:
 
 ```bash
-curl -X POST "http://idrive.dev/api/register" \
+curl -X POST "http://idrive.chapka.me/api/register" \
 -H "Accept: application/json" \
     -d "name"="et" \
     -d "email"="milo77@example.org" \
@@ -412,7 +412,7 @@ curl -X POST "http://idrive.dev/api/register" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/register",
+    "url": "http://idrive.chapka.me/api/register",
     "method": "POST",
     "data": {
         "name": "et",
@@ -511,7 +511,7 @@ Return profile of the currently logged in user, otherwise the user given in para
 > Example request:
 
 ```bash
-curl -X GET "http://idrive.dev/api/user" \
+curl -X GET "http://idrive.chapka.me/api/user" \
 -H "Accept: application/json"
 ```
 
@@ -519,7 +519,7 @@ curl -X GET "http://idrive.dev/api/user" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/user",
+    "url": "http://idrive.chapka.me/api/user",
     "method": "GET",
     "headers": {
         "accept": "application/json"
@@ -582,7 +582,7 @@ Return detailed list of session of the given user
 > Example request:
 
 ```bash
-curl -X GET "http://idrive.dev/api/user/board" \
+curl -X GET "http://idrive.chapka.me/api/user/board" \
 -H "Accept: application/json"
 ```
 
@@ -590,7 +590,7 @@ curl -X GET "http://idrive.dev/api/user/board" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/user/board",
+    "url": "http://idrive.chapka.me/api/user/board",
     "method": "GET",
     "headers": {
         "accept": "application/json"
@@ -706,7 +706,7 @@ Update the currently logged in user profile, ability to update custom field for 
 > Example request:
 
 ```bash
-curl -X PATCH "http://idrive.dev/api/user" \
+curl -X PATCH "http://idrive.chapka.me/api/user" \
 -H "Accept: application/json" \
     -d "name"="et" \
     -d "email"="zack04@example.com" \
@@ -727,7 +727,7 @@ curl -X PATCH "http://idrive.dev/api/user" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/user",
+    "url": "http://idrive.chapka.me/api/user",
     "method": "PATCH",
     "data": {
         "name": "et",
@@ -809,7 +809,7 @@ Rate the given user with the mark passed in parameters, note that the user must 
 > Example request:
 
 ```bash
-curl -X PATCH "http://idrive.dev/api/user/{user}/rate" \
+curl -X PATCH "http://idrive.chapka.me/api/user/{user}/rate" \
 -H "Accept: application/json"
 ```
 
@@ -817,7 +817,7 @@ curl -X PATCH "http://idrive.dev/api/user/{user}/rate" \
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "http://idrive.dev/api/user/{user}/rate",
+    "url": "http://idrive.chapka.me/api/user/{user}/rate",
     "method": "PATCH",
     "headers": {
         "accept": "application/json"
