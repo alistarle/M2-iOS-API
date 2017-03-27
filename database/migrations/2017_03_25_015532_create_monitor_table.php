@@ -13,7 +13,13 @@ class CreateMonitorTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('monitors', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string("vehiculeBrand")->nullable();
+            $table->string("vehiculeModel")->nullable();
+            $table->string("vehiculeYear")->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ class CreateMonitorTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('monitors');
     }
 }

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatarUrl', 'phone', 'address', 'cp', 'city', 'range_km', 'price'
     ];
 
     /**
@@ -27,4 +27,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Retur whether a Monitor/Student object associated
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function role()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Return User's sessions
+     *
+     * @return mixed
+     */
+    public function sessions()
+    {
+        return $this->role->sessions();
+    }
 }
