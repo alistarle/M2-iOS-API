@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dcbef76220a419e31ecd9d95a69e5d57",
-    "content-hash": "44ff5c7180c161acac7be9f478da8085",
+    "hash": "e95cb86ee156e8ebb6c6c963cea63f33",
+    "content-hash": "b839e86ae13c78cd0e00a2ae2f2993da",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1323,16 +1323,16 @@
         },
         {
             "name": "mpociot/laravel-apidoc-generator",
-            "version": "2.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpociot/laravel-apidoc-generator.git",
-                "reference": "d66f5e81ac40f72063053e1c0a4d5717f4dd6897"
+                "reference": "3a0393799d3956e62ac38466987ad1bdfd6d5f2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpociot/laravel-apidoc-generator/zipball/d66f5e81ac40f72063053e1c0a4d5717f4dd6897",
-                "reference": "d66f5e81ac40f72063053e1c0a4d5717f4dd6897",
+                "url": "https://api.github.com/repos/mpociot/laravel-apidoc-generator/zipball/3a0393799d3956e62ac38466987ad1bdfd6d5f2b",
+                "reference": "3a0393799d3956e62ac38466987ad1bdfd6d5f2b",
                 "shasum": ""
             },
             "require": {
@@ -1372,7 +1372,7 @@
                 "documentation",
                 "laravel"
             ],
-            "time": "2017-01-29 21:07:34"
+            "time": "2017-03-25 15:40:41"
         },
         {
             "name": "mpociot/reflection-docblock",
@@ -1975,16 +1975,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458"
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0b7bdfb180e72c8d76e75a649ced67e392201458",
-                "reference": "0b7bdfb180e72c8d76e75a649ced67e392201458",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
                 "shasum": ""
             },
             "require": {
@@ -1996,9 +1996,9 @@
             },
             "require-dev": {
                 "apigen/apigen": "^4.1",
-                "codeception/aspect-mock": "1.0.0",
+                "codeception/aspect-mock": "^1.0 | ^2.0",
                 "doctrine/annotations": "~1.2.0",
-                "goaop/framework": "1.0.0-alpha.2",
+                "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "mockery/mockery": "^0.9.4",
@@ -2053,7 +2053,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-03-18 15:38:09"
+            "time": "2017-03-26 20:37:53"
         },
         {
             "name": "spatie/fractalistic",
@@ -4688,7 +4688,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mpociot/laravel-apidoc-generator": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

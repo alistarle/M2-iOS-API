@@ -13,13 +13,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * @resource User
+ * @resource User Routes
  *
- * Longer description
+ * Routes who describes all user interaction, like registering, display profile, edit profile and rate profile
  */
 class UserController extends Controller
 {
     /**
+     * Get Profile
+     *
      * Return profile of the currently logged in user, otherwise the user given in parameters
      *
      * @param Request $request
@@ -28,13 +30,14 @@ class UserController extends Controller
      */
     public function profile(Request $request, User $user)
     {
-
         $user = ($user->id) ? $user : $request->user();
         return fractal($user, new UserTransformer())->respond();
     }
 
     /**
-     * Update the currently logged in user profile
+     * Update User Profile
+     *
+     * Update the currently logged in user profile, ability to update custom field for monitor or student
      *
      * @param UserRequest $request
      * @return JsonResponse
@@ -54,6 +57,8 @@ class UserController extends Controller
     }
 
     /**
+     * Create User
+     *
      * Create a new User ( Monitor or Student )
      *
      * @param UserRequest $request
@@ -76,6 +81,8 @@ class UserController extends Controller
     }
 
     /**
+     * Get User History
+     *
      * Return detailed list of session of the given user
      *
      * @param Request $request
@@ -95,7 +102,9 @@ class UserController extends Controller
     }
 
     /**
-     * Rate the given user with the mark passed in parameters
+     * Rate Monitor
+     *
+     * Rate the given user with the mark passed in parameters, note that the user must be a monitor
      *
      * @param Request $request
      * @param User $user

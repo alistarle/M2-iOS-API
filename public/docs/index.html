@@ -44,10 +44,938 @@
       <div class="dark-box"></div>
       <div class="content">
           <!-- START_INFO -->
-<h1>Info</h1>
+<h1>Informations</h1>
 <p>Welcome to the generated API reference.
-<a href="http://idrive.dev/docs/collection.json">Get Postman Collection</a></p>
-<!-- END_INFO -->
+<a href="http://idrive.dev/docs/collection.json">Get Postman Collection</a>
+<a href="http://idrive.dev/docs/API-soapui-project.xml">Get SoapUI Project File</a></p>
+<p>Here is the following account available for testing :</p>
+<ul>
+<li><strong>alistarle@gmail.com:password</strong> (Monitor)</li>
+<li><strong>b.piquer@gmail.com:password</strong> (Monitor)</li>
+<li><strong>alex.astier@gmail.com:password</strong> (Student)</li>
+<li><strong>vladimir.karasouloff@gmail.com:password</strong> (Student)</li>
+<li><strong>julien.gauttier@gmail.com:password</strong> (Student)</li>
+<li><strong>john@gmail.com:password</strong> (Student)
+<!-- END_INFO --></li>
+</ul>
+<h1>Session routes</h1>
+<p>Routes who describes all the endpoints who are about Session
+A session is a planified meeting between a monitor and a student, it can be in different state during its lifecycle :</p>
+<p>CREATED = Just created, with only one User, monitor or student, and waiting for a subscription</p>
+<p>PENDING = A second User ask the creator to accept his request, if he refuse, the meeting rollback to CREATED state</p>
+<p>VALIDATED = The two user have validated the meeting, and waiting for it to begin</p>
+<p>BEGINNED = The meeting have been triggered by the monitor, the start location is just saved</p>
+<p>FINISHED = The meeting is finished, the monitor save the rating, the description, and the finish position is calculated</p>
+<!-- START_b47cfdb6ed179b3009bff8d7eb886a1b -->
+<h2>Create session</h2>
+<p>Create a new session in a CREATED state</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://idrive.dev/api/session" \
+-H "Accept: application/json" \
+    -d "sessionDate"="Tuesday, 28-Mar-17 20:28:03 UTC" \
+    -d "begin"="20:28" \
+    -d "end"="20:28" \
+    -d "departure"="47.9167,1.9" \
+    -d "arrival"="47.9167,1.9" \
+</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/session",
+    "method": "POST",
+    "data": {
+        "sessionDate": "Tuesday, 28-Mar-17 20:28:03 UTC",
+        "begin": "20:28",
+        "end": "20:28",
+        "departure": "47.9167,1.9",
+        "arrival": "47.9167,1.9"
+},
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+      "id": 3,
+      "distance": null,
+      "departure": "46.76776213241735,1.6659871796874768",
+      "arrival": "47.9167,1.9",
+      "sessionDate": "2017-03-26",
+      "begin": "11:00:00",
+      "end": "12:00:00",
+      "rate": null,
+      "description": null,
+      "status": "CREATED",
+      "creator_id": 3,
+      "student":       {
+         "id": 3,
+         "name": "Alexandre Astier",
+         "email": "alex.astier@gmail.com",
+         "phone": "0632591834",
+         "address": "100 boulevard suchet",
+         "city": "Paris",
+         "cp": 75016,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 20,
+         "price": 15,
+         "type": "student"
+      }
+   }</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/session</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sessionDate</td>
+<td>date</td>
+<td>required</td>
+<td>Must be a date after: <code>Monday, 27-Mar-17 20:28:03 UTC</code></td>
+</tr>
+<tr>
+<td>begin</td>
+<td>date</td>
+<td>required</td>
+<td>Date format: <code>H:i</code></td>
+</tr>
+<tr>
+<td>end</td>
+<td>date</td>
+<td>required</td>
+<td>Date format: <code>H:i</code></td>
+</tr>
+<tr>
+<td>departure</td>
+<td>string</td>
+<td>required</td>
+<td>Must match this regular expression: <code>/^((-|)\d*\.\d*),((-|)\d*\.\d*)$/</code></td>
+</tr>
+<tr>
+<td>arrival</td>
+<td>string</td>
+<td>required</td>
+<td>Must match this regular expression: <code>/^((-|)\d*\.\d*),((-|)\d*\.\d*)$/</code></td>
+</tr>
+</tbody>
+</table>
+<!-- END_b47cfdb6ed179b3009bff8d7eb886a1b -->
+<!-- START_0ce63acb3f732f3f42e80a8bcbbab46b -->
+<h2>List of match</h2>
+<p>Return list of sessions who match the given session</p>
+<p>If no parameters =&gt; Return list of potential matching</p>
+<p>If match query parameter =&gt; Return amount of matching sessions</p>
+<p>If unmatch query parameter =&gt; Return amount of matching sessions</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET "http://idrive.dev/api/match/{session}" \
+-H "Accept: application/json"</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/match/{session}",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+   "matching":    [
+            {
+         "id": 7,
+         "distance": null,
+         "departure": "47.9167,1.9",
+         "arrival": "47.9167,1.9",
+         "sessionDate": "2017-03-26",
+         "begin": "11:00:00",
+         "end": "12:00:00",
+         "rate": null,
+         "description": null,
+         "status": "CREATED",
+         "creator_id": 1,
+         "monitor":          {
+            "id": 1,
+            "name": "Victor Coutellier",
+            "email": "alistarle@gmail.com",
+            "phone": "0632591834",
+            "address": "1 rue de tours",
+            "city": "Orleans",
+            "cp": 45100,
+            "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+            "rang_km": 10,
+            "price": 12,
+            "type": "monitor",
+            "vehicule":             {
+               "brand": "Opel",
+               "model": "Zafira",
+               "year": "2016"
+            }
+         }
+      },
+            {
+         "id": 8,
+         "distance": null,
+         "departure": "47.9167,1.9",
+         "arrival": "47.9167,1.9",
+         "sessionDate": "2017-03-26",
+         "begin": "11:00:00",
+         "end": "12:00:00",
+         "rate": null,
+         "description": null,
+         "status": "CREATED",
+         "creator_id": 1,
+         "monitor":          {
+            "id": 1,
+            "name": "Victor Coutellier",
+            "email": "alistarle@gmail.com",
+            "phone": "0632591834",
+            "address": "1 rue de tours",
+            "city": "Orleans",
+            "cp": 45100,
+            "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+            "rang_km": 10,
+            "price": 12,
+            "type": "monitor",
+            "vehicule":             {
+               "brand": "Opel",
+               "model": "Zafira",
+               "year": "2016"
+            }
+         }
+      }
+   ],
+   "unmatching": [   {
+      "id": 9,
+      "distance": null,
+      "departure": "47.9167,1.9",
+      "arrival": "47.9167,1.9",
+      "sessionDate": "2017-03-26",
+      "begin": "11:00:00",
+      "end": "12:00:00",
+      "rate": null,
+      "description": null,
+      "status": "CREATED",
+      "creator_id": 1,
+      "monitor":       {
+         "id": 1,
+         "name": "Victor Coutellier",
+         "email": "alistarle@gmail.com",
+         "phone": "0632591834",
+         "address": "1 rue de tours",
+         "city": "Orleans",
+         "cp": 45100,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 10,
+         "price": 12,
+         "type": "monitor",
+         "vehicule":          {
+            "brand": "Opel",
+            "model": "Zafira",
+            "year": "2016"
+         }
+      }
+   }]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/match/{session}</code></p>
+<p><code>HEAD api/match/{session}</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>matching</td>
+<td>numeric</td>
+<td>optional</td>
+<td>Number of matching result</td>
+</tr>
+<tr>
+<td>unmatching</td>
+<td>numeric</td>
+<td>optional</td>
+<td>Number of unmatching result</td>
+</tr>
+</tbody>
+</table>
+<!-- END_0ce63acb3f732f3f42e80a8bcbbab46b -->
+<!-- START_de1c03965a6fe5d1d7b6ce3a57b4a83f -->
+<h2>Update session</h2>
+<p>Update the given session ( state, description, participants, etc...)
+This method check the current session state to avoid incoherence</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PATCH "http://idrive.dev/api/session/{session}" \
+-H "Accept: application/json" \
+    -d "departure"="47.9167,1.9" \
+    -d "arrival"="47.9167,1.9" \
+</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/session/{session}",
+    "method": "PATCH",
+    "data": {
+        "departure": "47.9167,1.9",
+        "arrival": "47.9167,1.9"
+},
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+      "id": 3,
+      "distance": null,
+      "departure": "46.76776213241735,1.6659871796874768",
+      "arrival": "47.9167,1.9",
+      "sessionDate": "2017-03-26",
+      "begin": "11:00:00",
+      "end": "12:00:00",
+      "rate": null,
+      "description": null,
+      "status": "PENDING",
+      "creator_id": 3,
+      "student":       {
+         "id": 3,
+         "name": "Alexandre Astier",
+         "email": "alex.astier@gmail.com",
+         "phone": "0632591834",
+         "address": "100 boulevard suchet",
+         "city": "Paris",
+         "cp": 75016,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 20,
+         "price": 15,
+         "type": "student"
+      },
+      "monitor":       {
+         "id": 1,
+         "name": "Victor Coutellier",
+         "email": "alistarle@gmail.com",
+         "phone": "0632591834",
+         "address": "1 rue de tours",
+         "city": "Orleans",
+         "cp": 45100,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 10,
+         "price": 12,
+         "type": "monitor",
+         "vehicule":          {
+            "brand": "Opel",
+            "model": "Zafira",
+            "year": "2016"
+         }
+      }
+   }</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PATCH api/session/{session}</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>session_id</td>
+<td>numeric</td>
+<td>optional</td>
+<td>Id of the session to merge into the given one {session}</td>
+</tr>
+<tr>
+<td>departure</td>
+<td>string</td>
+<td>optional</td>
+<td>Must match this regular expression: <code>/^((-|)\d*\.\d*),((-|)\d*\.\d*)$/</code></td>
+</tr>
+<tr>
+<td>arrival</td>
+<td>string</td>
+<td>optional</td>
+<td>Must match this regular expression: <code>/^((-|)\d*\.\d*),((-|)\d*\.\d*)$/</code></td>
+</tr>
+</tbody>
+</table>
+<!-- END_de1c03965a6fe5d1d7b6ce3a57b4a83f -->
+<h1>User Routes</h1>
+<p>Routes who describes all user interaction, like registering, display profile, edit profile and rate profile</p>
+<!-- START_d7b7952e7fdddc07c978c9bdaf757acf -->
+<h2>Create User</h2>
+<p>Create a new User ( Monitor or Student )</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://idrive.dev/api/register" \
+-H "Accept: application/json" \
+    -d "name"="et" \
+    -d "email"="milo77@example.org" \
+    -d "password"="et" \
+    -d "password_confirmation"="et" \
+    -d "avatar"="et" \
+    -d "phone"="1386754391" \
+    -d "address"="et" \
+    -d "cp"="66561" \
+    -d "city"="et" \
+    -d "range_km"="61820" \
+    -d "price"="61820" \
+    -d "role"="student" \
+</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/register",
+    "method": "POST",
+    "data": {
+        "name": "et",
+        "email": "milo77@example.org",
+        "password": "et",
+        "password_confirmation": "et",
+        "avatar": "et",
+        "phone": "1386754391",
+        "address": "et",
+        "cp": 66561,
+        "city": "et",
+        "range_km": 61820,
+        "price": 61820,
+        "role": "student"
+},
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example Student response:</p>
+</blockquote>
+<pre><code class="language-json">{"data": {
+   "id": 5,
+   "name": "Julien Gauttier",
+   "email": "julien.gauttier@gmail.com",
+   "phone": "0632591834",
+   "address": "5 rue de tours",
+   "city": "Orleans",
+   "cp": 45100,
+   "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+   "rang_km": 1000,
+   "price": 100,
+   "type": "student"
+}}</code></pre>
+<blockquote>
+<p>Example Monitor response:</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+       "id": 2,
+       "name": "Jean-Baptiste Piquer",
+       "email": "jb.piquer@gmail.com",
+       "phone": "0632591834",
+       "address": "3 rue moliere",
+       "city": "Orleans",
+       "cp": 45000,
+       "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+       "rang_km": 5,
+       "price": 30,
+       "type": "monitor",
+       "vehicule":    {
+          "brand": "Peugeot",
+          "model": "207",
+          "year": "2003"
+       }
+    }
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/register</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>email</td>
+<td>email</td>
+<td>required</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>required</td>
+<td>Minimum: <code>6</code></td>
+</tr>
+<tr>
+<td>password_confirmation</td>
+<td>string</td>
+<td>required</td>
+<td>Must be the same as <code>password</code></td>
+</tr>
+<tr>
+<td>avatar</td>
+<td>image</td>
+<td>optional</td>
+<td>Must be an image (jpeg, png, bmp, gif, or svg)</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>numeric</td>
+<td>required</td>
+<td>Must have an exact length of <code>10</code></td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>cp</td>
+<td>numeric</td>
+<td>required</td>
+<td>Must have an exact length of <code>5</code></td>
+</tr>
+<tr>
+<td>city</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>range_km</td>
+<td>integer</td>
+<td>required</td>
+</tr>
+<tr>
+<td>price</td>
+<td>integer</td>
+<td>required</td>
+</tr>
+<tr>
+<td>role</td>
+<td>string</td>
+<td>required</td>
+<td><code>monitor</code> or <code>student</code></td>
+</tr>
+</tbody>
+</table>
+<!-- END_d7b7952e7fdddc07c978c9bdaf757acf -->
+<!-- START_2ea88ff35aa222f5582e50f39a2b35fd -->
+<h2>Get Profile</h2>
+<p>Return profile of the currently logged in user, otherwise the user given in parameters</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET "http://idrive.dev/api/user" \
+-H "Accept: application/json"</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/user",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+       "id": 2,
+       "name": "Jean-Baptiste Piquer",
+       "email": "jb.piquer@gmail.com",
+       "phone": "0632591834",
+       "address": "3 rue moliere",
+       "city": "Orleans",
+       "cp": 45000,
+       "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+       "rang_km": 5,
+       "price": 30,
+       "type": "monitor",
+       "vehicule":    {
+          "brand": "Peugeot",
+          "model": "207",
+          "year": "2003"
+       }
+    }
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/user</code></p>
+<p><code>HEAD api/user</code></p>
+<p><code>GET api/user/{user}</code></p>
+<p><code>HEAD api/user/{user}</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>numeric</td>
+<td>optionnal</td>
+<td>Id of the user you want to retrieve the profile</td>
+</tr>
+</tbody>
+</table>
+<!-- END_2ea88ff35aa222f5582e50f39a2b35fd -->
+<!-- START_0c01c2672c3869cc110476c48f24c29d -->
+<h2>Get User History</h2>
+<p>Return detailed list of session of the given user</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET "http://idrive.dev/api/user/board" \
+-H "Accept: application/json"</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/user/board",
+    "method": "GET",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{"data": [
+      {
+      "id": 1,
+      "distance": 24,
+      "departure": "47.9167,1.9",
+      "arrival": "47.9167,1.9",
+      "sessionDate": "2017-03-25",
+      "begin": "11:00:00",
+      "end": "12:00:00",
+      "rate": 4,
+      "description": "Ceci est un description",
+      "status": "FINISHED",
+      "creator_id": 1,
+      "monitor":       {
+         "id": 1,
+         "name": "Victor Coutellier",
+         "email": "alistarle@gmail.com",
+         "phone": "0632591834",
+         "address": "1 rue de tours",
+         "city": "Orleans",
+         "cp": 45100,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 10,
+         "price": 12,
+         "type": "monitor",
+         "vehicule":          {
+            "brand": "Opel",
+            "model": "Zafira",
+            "year": "2016"
+         }
+      },
+      "student":       {
+         "id": 3,
+         "name": "Alexandre Astier",
+         "email": "alex.astier@gmail.com",
+         "phone": "0632591834",
+         "address": "100 boulevard suchet",
+         "city": "Paris",
+         "cp": 75016,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 20,
+         "price": 15,
+         "type": "student"
+      }
+   },
+      {
+      "id": 3,
+      "distance": null,
+      "departure": "46.76776213241735,1.6659871796874768",
+      "arrival": "47.9167,1.9",
+      "sessionDate": "2017-03-26",
+      "begin": "11:00:00",
+      "end": "12:00:00",
+      "rate": null,
+      "description": null,
+      "status": "CREATED",
+      "creator_id": 3,
+      "student":       {
+         "id": 3,
+         "name": "Alexandre Astier",
+         "email": "alex.astier@gmail.com",
+         "phone": "0632591834",
+         "address": "100 boulevard suchet",
+         "city": "Paris",
+         "cp": 75016,
+         "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+         "rang_km": 20,
+         "price": 15,
+         "type": "student"
+      }
+   }
+]}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/user/board</code></p>
+<p><code>HEAD api/user/board</code></p>
+<p><code>GET api/user/{user}/board</code></p>
+<p><code>HEAD api/user/{user}/board</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>numeric</td>
+<td>optionnal</td>
+<td>Id of the user you want to retrieve the profile</td>
+</tr>
+</tbody>
+</table>
+<!-- END_0c01c2672c3869cc110476c48f24c29d -->
+<!-- START_e75f2f63a5a2351c4f4d83bc65cefcf8 -->
+<h2>Update User Profile</h2>
+<p>Update the currently logged in user profile, ability to update custom field for monitor or student</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PATCH "http://idrive.dev/api/user" \
+-H "Accept: application/json" \
+    -d "name"="et" \
+    -d "email"="zack04@example.com" \
+    -d "password"="et" \
+    -d "password_confirmation"="et" \
+    -d "avatar"="et" \
+    -d "phone"="1438272779" \
+    -d "address"="et" \
+    -d "cp"="68825" \
+    -d "city"="et" \
+    -d "range_km"="360181" \
+    -d "price"="360181" \
+    -d "role"="student" \
+</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/user",
+    "method": "PATCH",
+    "data": {
+        "name": "et",
+        "email": "zack04@example.com",
+        "password": "et",
+        "password_confirmation": "et",
+        "avatar": "et",
+        "phone": "1438272779",
+        "address": "et",
+        "cp": 68825,
+        "city": "et",
+        "range_km": 360181,
+        "price": 360181,
+        "role": "student"
+},
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<blockquote>
+<p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+       "id": 2,
+       "name": "Jean-Baptiste Piquer",
+       "email": "jb.piquer@gmail.com",
+       "phone": "0632591834",
+       "address": "3 rue moliere",
+       "city": "Orleans",
+       "cp": 45000,
+       "avatarUrl": "http://jeanbaptiste.bayle.free.fr/AVATAR/grey_81618-default-avatar-200x200.jpg",
+       "rang_km": 5,
+       "price": 30,
+       "type": "monitor",
+       "vehicule":    {
+          "brand": "Peugeot",
+          "model": "207",
+          "year": "2003"
+       }
+    }
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PATCH api/user</code></p>
+<h4>Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>email</td>
+<td>email</td>
+<td>required</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>required</td>
+<td>Minimum: <code>6</code></td>
+</tr>
+<tr>
+<td>password_confirmation</td>
+<td>string</td>
+<td>required</td>
+<td>Must be the same as <code>password</code></td>
+</tr>
+<tr>
+<td>avatar</td>
+<td>image</td>
+<td>optional</td>
+<td>Must be an image (jpeg, png, bmp, gif, or svg)</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>numeric</td>
+<td>required</td>
+<td>Must have an exact length of <code>10</code></td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>cp</td>
+<td>numeric</td>
+<td>required</td>
+<td>Must have an exact length of <code>5</code></td>
+</tr>
+<tr>
+<td>city</td>
+<td>string</td>
+<td>required</td>
+</tr>
+<tr>
+<td>range_km</td>
+<td>integer</td>
+<td>required</td>
+</tr>
+<tr>
+<td>price</td>
+<td>integer</td>
+<td>required</td>
+</tr>
+<tr>
+<td>role</td>
+<td>string</td>
+<td>required</td>
+<td><code>monitor</code> or <code>student</code></td>
+</tr>
+</tbody>
+</table>
+<!-- END_e75f2f63a5a2351c4f4d83bc65cefcf8 -->
+<!-- START_49418778794fcf0119f4f23ba6ecb37b -->
+<h2>Rate Monitor</h2>
+<p>Rate the given user with the mark passed in parameters, note that the user must be a monitor</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PATCH "http://idrive.dev/api/user/{user}/rate" \
+-H "Accept: application/json"</code></pre>
+<pre><code class="language-javascript">var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "http://idrive.dev/api/user/{user}/rate",
+    "method": "PATCH",
+    "headers": {
+        "accept": "application/json"
+    }
+}
+
+$.ajax(settings).done(function (response) {
+    console.log(response);
+});</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PATCH api/user/{user}/rate</code></p>
+<!-- END_49418778794fcf0119f4f23ba6ecb37b -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

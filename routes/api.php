@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 Route::post("register", 'UserController@register'); //Done
 
-Route::group([], function() {
+Route::group(["middleware" => 'auth:api'], function() {
     Route::get("user", "UserController@profile"); //Done
     Route::get("user/board", "UserController@board"); //Done
     Route::patch("user", "UserController@update"); //Done

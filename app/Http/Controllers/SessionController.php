@@ -13,14 +13,27 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Fractalistic\Fractal;
 
 /**
- * @resource Session
+ * @resource Session routes
  *
- * Longer description
+ * Routes who describes all the endpoints who are about Session
+ * A session is a planified meeting between a monitor and a student, it can be in different state during its lifecycle :
+ *
+ * CREATED = Just created, with only one User, monitor or student, and waiting for a subscription
+ *
+ * PENDING = A second User ask the creator to accept his request, if he refuse, the meeting rollback to CREATED state
+ *
+ * VALIDATED = The two user have validated the meeting, and waiting for it to begin
+ *
+ * BEGINNED = The meeting have been triggered by the monitor, the start location is just saved
+ *
+ * FINISHED = The meeting is finished, the monitor save the rating, the description, and the finish position is calculated
  */
 class SessionController extends Controller
 {
     /**
-     * Create a new session
+     * Create session
+     *
+     * Create a new session in a CREATED state
      *
      * @param SessionRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -35,8 +48,14 @@ class SessionController extends Controller
     }
 
     /**
+     * List of match
+     *
+     * Return list of sessions who match the given session
+     *
      * If no parameters => Return list of potential matching
+     *
      * If match query parameter => Return amount of matching sessions
+     *
      * If unmatch query parameter => Return amount of matching sessions
      *
      * @param Request $request
@@ -73,7 +92,10 @@ class SessionController extends Controller
     }
 
     /**
+     * Update session
+     *
      * Update the given session ( state, description, participants, etc...)
+     * This method check the current session state to avoid incoherence
      *
      * @param SessionRequest $request
      * @param Session $session
