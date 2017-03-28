@@ -441,7 +441,7 @@ $.ajax(settings).done(function (response) {
 > Example Student response:
 
 ```json
-{"data": {
+{
    "id": 5,
    "name": "Julien Gauttier",
    "email": "julien.gauttier@gmail.com",
@@ -453,14 +453,13 @@ $.ajax(settings).done(function (response) {
    "rang_km": 1000,
    "price": 100,
    "type": "student"
-}}
+}
 ```
 
 > Example Monitor response:
 
 ```json
 {
-	"data": {
 	   "id": 2,
 	   "name": "Jean-Baptiste Piquer",
 	   "email": "jb.piquer@gmail.com",
@@ -477,7 +476,6 @@ $.ajax(settings).done(function (response) {
 	      "model": "207",
 	      "year": "2003"
 	   }
-	}
 }
 ```
 
@@ -535,7 +533,6 @@ $.ajax(settings).done(function (response) {
 
 ```json
 {
-	"data": {
 	   "id": 2,
 	   "name": "Jean-Baptiste Piquer",
 	   "email": "jb.piquer@gmail.com",
@@ -552,7 +549,6 @@ $.ajax(settings).done(function (response) {
 	      "model": "207",
 	      "year": "2003"
 	   }
-	}
 }
 ```
 
@@ -605,8 +601,8 @@ $.ajax(settings).done(function (response) {
 > Example response:
 
 ```json
-{"data": [
-      {
+[
+   {
       "id": 1,
       "distance": 24,
       "departure": "47.9167,1.9",
@@ -676,7 +672,7 @@ $.ajax(settings).done(function (response) {
          "type": "student"
       }
    }
-]}
+]
 ```
 
 ### HTTP Request
@@ -757,7 +753,6 @@ $.ajax(settings).done(function (response) {
 
 ```json
 {
-	"data": {
 	   "id": 2,
 	   "name": "Jean-Baptiste Piquer",
 	   "email": "jb.piquer@gmail.com",
@@ -774,7 +769,6 @@ $.ajax(settings).done(function (response) {
 	      "model": "207",
 	      "year": "2003"
 	   }
-	}
 }
 ```
 
