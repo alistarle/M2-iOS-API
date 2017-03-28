@@ -10,6 +10,7 @@ use App\Transformers\SessionTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Fractalistic\ArraySerializer;
 use Spatie\Fractalistic\Fractal;
 
 /**
@@ -44,7 +45,7 @@ class SessionController extends Controller
         $session->status = 0;
         $session->user()->associate($request->user());
         $request->user()->role->sessions()->save($session);
-        return fractal($session, new SessionTransformer())->respond();
+        return fractal($session, new SessionTransformer())->serializeWith(new ArraySerializer())->respond();
     }
 
     /**
@@ -86,8 +87,8 @@ class SessionController extends Controller
                                 ->get();
 
         return [
-            "matching" => Fractal::create()->collection($data["matching"], new SessionTransformer())->toArray()["data"],
-            "unmatching" => Fractal::create()->collection($data["unmatching"], new SessionTransformer())->toArray()["data"]
+            "matching" => Fractal::create()->collection($data["matching"], new SessionTransformer())->serializeWith(new ArraySerializer())->toArray()["data"],
+            "unmatching" => Fractal::create()->collection($data["unmatching"], new SessionTransformer())->serializeWith(new ArraySerializer())->toArray()["data"]
         ];
     }
 
@@ -141,6 +142,6 @@ class SessionController extends Controller
         }
         $session->save();
         $session->setRelations([]);
-        return fractal($session, new SessionTransformer())->respond();
+        return fractal($session, new SessionTransformer())->serializeWith(new ArraySerializer())->respond();
     }
 }

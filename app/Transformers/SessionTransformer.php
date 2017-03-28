@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\Models\Session;
 use League\Fractal\TransformerAbstract;
+use Spatie\Fractalistic\ArraySerializer;
 use Spatie\Fractalistic\Fractal;
 
 class SessionTransformer extends TransformerAbstract
@@ -36,10 +37,10 @@ class SessionTransformer extends TransformerAbstract
         ];
 
         if($session->monitor)
-            $data["monitor"] = Fractal::create()->item($session->monitor->user, new UserTransformer())->toArray()["data"];
+            $data["monitor"] = Fractal::create()->item($session->monitor->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray()["data"];
 
         if($session->student)
-            $data["student"] = Fractal::create()->item($session->student->user, new UserTransformer())->toArray()["data"];
+            $data["student"] = Fractal::create()->item($session->student->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray()["data"];
 
         return $data;
     }

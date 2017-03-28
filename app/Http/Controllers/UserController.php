@@ -11,6 +11,7 @@ use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\Fractalistic\ArraySerializer;
 
 /**
  * @resource User Routes
@@ -31,7 +32,7 @@ class UserController extends Controller
     public function profile(Request $request, User $user)
     {
         $user = ($user->id) ? $user : $request->user();
-        return fractal($user, new UserTransformer())->respond();
+        return fractal($user, new UserTransformer())->serializeWith(new ArraySerializer())->respond();
     }
 
     /**
@@ -53,7 +54,7 @@ class UserController extends Controller
             $user->role->update($request->all());
 
         $user->save();
-        return fractal($user, new UserTransformer())->respond();
+        return fractal($user, new UserTransformer())->serializeWith(new ArraySerializer())->respond();
     }
 
     /**
@@ -77,7 +78,7 @@ class UserController extends Controller
 
         $user->role()->associate($role);
         $user->save();
-        return fractal($user, new UserTransformer())->respond();
+        return fractal($user, new UserTransformer())->serializeWith(new ArraySerializer())->respond();
     }
 
     /**
@@ -98,7 +99,7 @@ class UserController extends Controller
         if($user->id != $request->user()->id && $user->role instanceof Monitor)
             return new JsonResponse("Vous ne pouvez pas consulter l'historique d'un autre moniteur", 401);
 
-        return fractal()->collection($user->role->sessions)->transformWith(new SessionTransformer())->toArray();
+        return fractal()->collection($user->role->sessions)->transformWith(new SessionTransformer())->serializeWith(new ArraySerializer())->toArray();
     }
 
     /**
