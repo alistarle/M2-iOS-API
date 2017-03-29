@@ -37,10 +37,10 @@ class SessionTransformer extends TransformerAbstract
         ];
 
         if($session->monitor)
-            $data["monitor"] = Fractal::create()->item($session->monitor->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray()["data"];
+            $data["monitor"] = Fractal::create()->item($session->monitor->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray();
 
         if($session->student)
-            $data["student"] = Fractal::create()->item($session->student->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray()["data"];
+            $data["student"] = Fractal::create()->item($session->student->user, new UserTransformer())->serializeWith(new ArraySerializer())->toArray();
 
         return $data;
     }
