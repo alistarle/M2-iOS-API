@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
             "password" => "required|string|min:6",
             "password_confirmation" => "required|same:password",
             "avatar" => "image",
-            "phone" => "required|digits:10",
+            "phone" => "required|string|size:10",
             "address" => "required|string",
             "cp" => "required|digits:5",
             "city" => "required|string",
